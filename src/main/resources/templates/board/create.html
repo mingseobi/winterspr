@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CREATE</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+<body>
+<div>
+    create
+
+    title :
+    <input type="text" id="create_board_title" />
+    content :
+    <input type="text" id="create_board_content" />
+
+    <button onclick="create_board()">CREATE</button>
+
+    <script>
+        function create_board(){
+            let title = $("#create_board_title").val();
+            let content = $("#create_board_content").val();
+            /*alert(title);
+            alert(content);*/
+
+            $.ajax({
+                url: "/api/board/create",
+                type: "GET",
+                //contentType : 'application/json; charset=utf-8',
+                data: {
+                    title : title
+                    , content : content
+                },
+                cache: false,
+                success: (obj_data, status, xhr)=>{
+                    alert(JSON.stringify(obj_data));
+                },
+                error: (obj_data, status, xhr)=>{
+                    alert("error!!");
+                    alert(JSON.stringify(obj_data));
+                }
+            });
+        }
+    </script>
+
+
+</div>
+</body>
+</html>

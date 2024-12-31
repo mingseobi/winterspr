@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DETAIL</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+<body>
+<div>
+    detail
+
+    id :
+    <input type="text" id="detail_board_id" />
+    title :
+    <input type="text" id="detail_board_title" />
+    content :
+    <input type="text" id="detail_board_content" />
+
+    <button onclick="detail_board()">DETAIL</button>
+    <button onclick="update_board()">UPDATE</button>
+    <button onclick="delete_board()">DELETE</button>
+
+    <script>
+        function detail_board(){
+
+            $.ajax({
+                url: "/api/board/detail",
+                type: "GET",
+                //contentType : 'application/json; charset=utf-8',
+                data: {
+                    id : $("#detail_board_id").val()
+                },
+                cache: false,
+                success: (obj_data, status, xhr)=>{
+                    //alert(JSON.stringify(obj_data));
+                    let eachData = obj_data.data;
+                    $("#detail_board_title").val(eachData["title"]);
+                    $("#detail_board_content").val(eachData["content"]);
+                },
+                error: (obj_data, status, xhr)=>{
+                    alert("error!!");
+                    alert(JSON.stringify(obj_data));
+                }
+            });
+        }
+        function update_board(){
+
+            $.ajax({
+                url: "/api/board/update",
+                type: "GET",
+                //contentType : 'application/json; charset=utf-8',
+                data: {
+                    id : $("#detail_board_id").val()
+                    ,title : $("#detail_board_title").val()
+                    ,content : $("#detail_board_content").val()
+                },
+                cache: false,
+                success: (obj_data, status, xhr)=>{
+                    alert(JSON.stringify(obj_data));
+                },
+                error: (obj_data, status, xhr)=>{
+                    alert("error!!");
+                    alert(JSON.stringify(obj_data));
+                }
+            });
+        }
+        function delete_board(){
+
+            $.ajax({
+                url: "/api/board/delete",
+                type: "GET",
+                //contentType : 'application/json; charset=utf-8',
+                data: {
+                    id : $("#detail_board_id").val()
+                },
+                cache: false,
+                success: (obj_data, status, xhr)=>{
+                    alert(JSON.stringify(obj_data));
+                },
+                error: (obj_data, status, xhr)=>{
+                    alert("error!!");
+                    alert(JSON.stringify(obj_data));
+                }
+            });
+        }
+    </script>
+
+
+</div>
+</body>
+</html>

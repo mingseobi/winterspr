@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LIST</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+<body>
+<div>
+    list
+    <div id="div_board_list"></div>
+    <button onclick="list_board()">LIST</button>
+
+    <script>
+        function list_board(){
+            $.ajax({
+                url: "/api/board/list",
+                type: "GET",
+                //contentType : 'application/json; charset=utf-8',
+                data: {},
+                cache: false,
+                success: (obj_data, status, xhr)=>{
+                    //alert(JSON.stringify(obj_data));
+                    $("#div_board_list").html("");
+                    let a_list = obj_data;
+                    /*for(let i=0;i<a_list.length;i++){
+                        $("#div_board_list").append(
+                          "<div onclick='listener_detail_page("+a_list[i]["id"]+")'>"+ a_list[i].id + "title : " + a_list[i].title+"</div>"
+                        );
+                    }*/
+                    for(let each of a_list){
+                        //each 라는 객체 안에는 Map 형태로 글 한개의 정보가 들어있을것 입니다!
+                        $("#div_board_list").append(
+                            //div_board_list 라는 곳에 html 넣어주기!!
+                            "<div onclick='listener_detail_page("+each["id"]+")'>"+ each["id"] + "  title : " + each["title"]+"</div>"
+                        );
+                    }
+                },
+                error: (obj_data, status, xhr)=>{
+                    alert("error!!");
+                    alert(JSON.stringify(obj_data));
+                }
+            });
+        }
+        function listener_detail_page(obj_id){
+            location.href = "/board/detail/" + obj_id;
+        }
+    </script>
+
+
+</div>
+</body>
+</html>
