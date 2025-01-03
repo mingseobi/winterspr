@@ -14,71 +14,73 @@ import java.util.Map;
 @RestController
 public class PostRestController {
 
-    List<Map<String, Object>> boards = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> list_post = new ArrayList<Map<String, Object>>();
 
+    //create
     @GetMapping("/create")
     public Map<String, Object> create(@RequestParam Map<String, Object> params) {
-        System.out.println("Create Board");
-        System.out.println("Title: " + params.get("title"));
-        System.out.println("Content: " + params.get("content"));
 
-        Map<String, Object> board = new HashMap<String, Object>();
-        board.put("id", boards.size() + 1);
-        board.put("title", params.get("title"));
-        board.put("content", params.get("content"));
-        boards.add(board);
+        params.put("id", list_post.size() + 1);
+        list_post.add(params);
 
-        Map<String, Object> result = new HashMap<String, Object>();
-        result.put("code", 200);
-        result.put("id", board.get("id"));
+        Map<String, Object> returnValue = new HashMap<String, Object>();
+        //저장을 해주기!!
 
-        return result;
+        returnValue.put("code", 200);
+        returnValue.put("message", "Post created successfully");
+        returnValue.put("post", params);
+
+        return returnValue;
     }
 
+    //update
     @GetMapping("/update")
     public Map<String, Object> update(@RequestParam Map<String, Object> params) {
-        System.out.println("Update Board");
+        System.out.println("Update Post");
         System.out.println("Id: " + params.get("id"));
         System.out.println("Title: " + params.get("title"));
         System.out.println("Content: " + params.get("content"));
         int id = Integer.parseInt(params.get("id").toString()); //1
 
-        Map<String, Object> board = boards.get(id - 1);
-        board.put("title", params.get("title"));
-        board.put("content", params.get("content"));
+        Map<String, Object> post = list_post.get(id - 1);
+        post.put("title", params.get("title"));
+        post.put("content", params.get("content"));
 
-        Map<String, Object> result = new HashMap<String, Object>();
-        result.put("code", 200);
-        result.put("id", board.get("id"));
+        Map<String, Object> returnValue = new HashMap<String, Object>();
+        returnValue.put("code", 200);
+        returnValue.put("id", post.get("id"));
 
-        return result;
+        return returnValue;
     }
 
+    //delete
     @GetMapping("/delete")
     public Map<String, Object> delete(@RequestParam Map<String, Object> params) {
-        System.out.println("Delete Board");
+        System.out.println("Delete Post");
         System.out.println("Id: " + params.get("id"));
         params.put("title", "(deleted)");
         params.put("content", "(deleted)");
         return update(params);
     }
 
+    //list
     @GetMapping("/list")
     public List<Map<String, Object>> list() {
-        System.out.println("List Board");
-        return boards;
+        System.out.println("List Post");
+        return list_post;
     }
 
+    //detail
     @GetMapping("/detail")
     public Map<String, Object> detail(@RequestParam Map<String, Object> params) {
-        System.out.println("Detail Board");
+        System.out.println("Detail Post");
         int id = Integer.parseInt(params.get("id").toString()); //1
 
-        Map<String, Object> result = new HashMap<String, Object>();
-        result.put("code", 200);
-        result.put("data", boards.get(id - 1)); //0번째 데이터 꺼내서 돌려주기!
+        Map<String, Object> returnValue = new HashMap<String, Object>();
+        returnValue.put("code", 200);
+        returnValue.put("data", list_post.get(id - 1)); //0번째 데이터 꺼내서 돌려주기!
 
-        return result;
+        return returnValue;
     }
 
 
